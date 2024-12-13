@@ -1,7 +1,7 @@
 // Arquivo para ser executado no Node.js (VSCode e plataformas como Vercel)
 
 // Função principal para gerar a tabuada
-alert('Faça seus cálculos aqui')
+alert('Faça seus cálculos aqui');
 function gerarTabuada(numero) {
     let contador = 1;
     while (contador <= 10) {
