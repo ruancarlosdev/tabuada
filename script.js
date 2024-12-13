@@ -1,34 +1,34 @@
-function imprimirTabuada(numero, ate) {
-    if (typeof numero !== 'number' || isNaN(numero) || typeof ate !== 'number' || isNaN(ate)) {
-      console.error("Por favor, insira números válidos para o número da tabuada e até onde ela deve ir.");
-      return;
+var valor = document.querySelector("div.container input")
+var tabuada = document.querySelector("div.container div.tabuada")
+const calcular = document.querySelector("div.container button")
+
+
+calcular.addEventListener("click", () => {
+
+    tabuada.innerHTML = ""
+
+    if (Number(valor.value) < 1 || Number(valor.value) > 12) {
+
+        tabuada.innerHTML = "Insira um valor no intervalo de 1 a 12"
+
+    } else {
+
+        /* A variável i = 1 porque é onde vai começar a nossa tabuada, logo em seguida 
+            i <= 12 porque é onde termina a nossa tabuada
+        */
+
+        for (i = 1; i <= 12; i++) {
+
+            var calc = String(i) + " x " + valor.value + " = " + i * Number(valor.value);
+
+            var resultado = document.createElement("p")
+
+            resultado.innerText = calc
+
+            tabuada.appendChild(resultado)
+
+        }
+
     }
-  
-      if (ate < 1) {
-          console.error("O valor 'até' deve ser maior ou igual a 1.");
-          return;
-      }
-  
-    console.log(`Tabuada do ${numero} (até ${ate}):`);
-    for (let i = 1; i <= ate; i++) {
-      const resultado = numero * i;
-      console.log(`${numero} x ${i} = ${resultado}`);
-    }
-  }
-  
-  const readline = require('readline').createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  
-  readline.question('Digite o número para a tabuada: ', (numeroInput) => {
-      const numero = parseInt(numeroInput);
-  
-    readline.question('Digite até qual número deseja calcular a tabuada: ', (ateInput) => {
-      const ate = parseInt(ateInput);
-  
-      imprimirTabuada(numero, ate);
-  
-      readline.close();
-    });
-  });
+
+})
