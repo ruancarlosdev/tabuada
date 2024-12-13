@@ -1,35 +1,24 @@
 
-const readline = require('readline');
-
-// Configuração do readline para interação no terminal
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
-
 // Função principal para gerar a tabuada
 function gerarTabuada(numero) {
-    console.log(`Tabuada do ${numero}:`);
+    let resultado = `<h1>Tabuada do ${numero}:</h1>`;
     for (let i = 1; i <= 10; i++) {
-        console.log(`${numero} x ${i} = ${numero * i}`);
+        resultado += `<p>${numero} x ${i} = ${numero * i}</p>`;
     }
+    return resultado;
 }
 
-// Função para solicitar o número ao usuário
-function perguntarNumero() {
-    rl.question("Digite um número para gerar a tabuada: ", (input) => {
-        const numero = parseInt(input);
+// Função para lidar com a requisição HTTP
+export default function handler(req, res) {
+    const { query } = req;
+    const numero = parseInt(query.numero);
 
-        if (isNaN(numero)) {
-            console.log("Por favor, digite um número válido.");
-            return perguntarNumero();
-        }
+    if (isNaN(numero)) {
+        res.status(400).send("Por favor, forneça um número válido como parâmetro na URL, por exemplo: /api/tabuada?numero=5");
+        return;
+    }
 
-        gerarTabuada(numero);
-        rl.close();
-    });
+    const tabuada = gerarTabuada(numero);
+    res.setHeader("Content-Type", "text/html");
+    res.status(200).send(tabuada);
 }
-
-// Inicia o programa
-console.log("Bem-vindo ao programa de tabuada!");
-perguntarNumero();
