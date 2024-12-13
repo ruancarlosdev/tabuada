@@ -1,21 +1,35 @@
-// Arquivo para ser executado no Node.js (VSCode e plataformas como Vercel)
+
+const readline = require('readline');
+
+// Configuração do readline para interação no terminal
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
 
 // Função principal para gerar a tabuada
-alert('Faça seus cálculos aqui');
 function gerarTabuada(numero) {
-    let contador = 1;
-    while (contador <= 10) {
-        const resultado = numero * contador;
-        console.log(`${numero} x ${contador} = ${resultado}`);
-        contador++;
+    console.log(`Tabuada do ${numero}:`);
+    for (let i = 1; i <= 10; i++) {
+        console.log(`${numero} x ${i} = ${numero * i}`);
     }
 }
 
-// Solicita ao usuário que informe um número via variável ambiente ou argumento
-const numero = parseInt(process.argv[2]);
+// Função para solicitar o número ao usuário
+function perguntarNumero() {
+    rl.question("Digite um número para gerar a tabuada: ", (input) => {
+        const numero = parseInt(input);
 
-if (isNaN(numero)) {
-    console.log("Por favor, forneça um número válido ao executar o script.\nExemplo: node tabuada.js 5");
-} else {
-    gerarTabuada(numero);
+        if (isNaN(numero)) {
+            console.log("Por favor, digite um número válido.");
+            return perguntarNumero();
+        }
+
+        gerarTabuada(numero);
+        rl.close();
+    });
 }
+
+// Inicia o programa
+console.log("Bem-vindo ao programa de tabuada!");
+perguntarNumero();
